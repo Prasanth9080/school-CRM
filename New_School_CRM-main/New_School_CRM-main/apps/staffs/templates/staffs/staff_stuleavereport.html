@@ -1,0 +1,37 @@
+{% extends 'staffs/staff_index.html' %}
+{% block content %}
+<h2>Student Leave Requests</h2>
+<table border="1">
+    <thead >
+        <tr>
+            <th>Student</th> 
+            <th>Standard</th> 
+            <th>Reason</th> 
+            <th>Date Applied</th> 
+            <th>Status</th> 
+            <th>Actions</th>
+        </tr>
+    </thead>
+    
+    <tbody >
+        {% for leave in leaves %}
+        <tr >
+            <td>{{ leave.student.username }}</td>
+            <td>{{ leave.standard }}</td>
+            <td>{{ leave.reason }}</td>
+            <td>{{ leave.date_applied }}</td>
+            <td>{{ leave.status }}</td>
+            <td>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="leave_id" value="{{ leave.id }}">
+                    <button name="action" value="approve">Approve</button>
+                    <button name="action" value="reject">Reject</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+{% endblock %}

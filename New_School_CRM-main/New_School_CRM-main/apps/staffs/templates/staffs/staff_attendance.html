@@ -1,0 +1,58 @@
+
+
+
+{% extends 'staffs/staff_index.html' %}
+
+{% block title %}
+  Attendance / Leave Management for staff
+{% endblock title %}
+
+{% block breadcrumb %}
+  <h5>Attendance</h5>
+{% endblock breadcrumb %}
+
+{% block content %}
+  <h3>Staff Attendance Info</h3>
+  <p>Attendance and leave records will be shown here.</p>
+  <div>
+    <h2>Leave Requestsss</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Staff</th>
+                <th>Reason</th>
+                <th>Date Applied</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for leave in leaves %}
+            <tr>
+                <td>{{ leave.staff.username }}</td>
+                <td>{{ leave.reason }}</td>
+                <td>{{ leave.date_applied }}</td>
+                <td>{{ leave.status }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No leave requests submitted.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <!-- Leave Request Form -->
+    <h3>Add Leave Request</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Leave</button>
+    </form>
+
+</div>
+{% endblock content %}
+
+
+

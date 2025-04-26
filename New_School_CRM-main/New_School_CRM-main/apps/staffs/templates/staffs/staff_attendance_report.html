@@ -1,0 +1,20 @@
+{% extends 'staffs/staff_index.html' %}
+{% block content %}
+<h2>My Attendance Report</h2>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Day</th>
+        <th>Status</th>
+        <th>Message</th>
+    </tr>
+    {% for rec in records %}
+    <tr>
+        <td>{{ rec.date }}</td>
+        <td>{{ rec.get_day_display }}</td>
+        <td>{{ rec.get_status_display }}</td>
+        <td>{{ rec.message }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'principal/principal_index.html' %}
+{% block content %}
+<h2>All Staff Attendance Records</h2>
+<a href="{% url 'staff-attendance-create' %}">Add New Attendance</a>
+<table>
+    <tr>
+        <th>Staff</th>
+        <th>Date</th>
+        <th>Day</th>
+        <th>Status</th>
+        <th>Message</th>
+        <th>Signature</th>
+        <th>Actions</th>
+    </tr>
+    {% for rec in records %}
+    <tr>
+        <td>{{ rec.staff.get_full_name }} ({{ rec.staff.username }})</td>
+        <td>{{ rec.date }}</td>
+        <td>{{ rec.get_day_display }}</td>
+        <td>{{ rec.get_status_display }}</td>
+        <td>{{ rec.message }}</td>
+        <td>{{ rec.signature }}</td>
+        <td>
+            <a href="{% url 'staff-attendance-update' rec.pk %}">Edit</a> |
+            <a href="{% url 'staff-attendance-delete' rec.pk %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
