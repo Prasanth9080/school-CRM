@@ -1,30 +1,45 @@
-<!-- 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div style="display: flex; justify-content: center; align-items: center; margin: 180px; padding: 40px;">
-        <div>
-            <h1>Student Attendance Management</h1>
-            <p><strong>Student Name:</strong> student</p>
-            <p><strong>Registration Number:</strong> 12345</p>
-            <p><strong>Tamil</strong> 100</p>
-            <p><strong>English</strong> 100</p>
-            <p><strong>Maths<strong> 100</p>
-            <p><strong>Science</strong> 100</p>
-            <p><strong>Social</strong> 100</p>
-            <p><strong>Total</strong> 500</p>
-            <p><strong>Pass / Fail:</strong> Pass</p>
-        </div>
-    
-    </div>
-    
-</body>
-</html> -->
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: start;
+    }
+    thead {
+        background-color: #FF7D7D;
+    }
+    /* NEW working colors */
+    .pending {
+        color: orange;
+        font-weight: bold;
+    }
+    .approved {
+        color: green;
+        font-weight: bold;
+    }
+    .rejected {
+        color: red;
+        font-weight: bold;
+    }
+    .submit-btn button{
+        background-color: #FF7D7D;
+        border-color: transparent;
+        color: white;
+        border-radius: 3px;
+    }
+    tbody tr {
+        font-size: 16px;
+        background-color: #E3E3E3;
+    }
+    tbody tr:hover {
+    background-color: #c8c7c7;
+    cursor: pointer;
+}
+</style>
 
 
 {% extends 'students/student_index.html' %}
@@ -38,8 +53,9 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-        <h2>Leave Requests</h2>
-        <table border="1">
+        <h4 class="text-center">Student's Leave Status</h4>
+
+        <table>
             <thead>
                 <tr>
                     <th>Student</th>
@@ -56,7 +72,19 @@
                     <td>{{ leave.standard }}</td>
                     <td>{{ leave.reason }}</td>
                     <td>{{ leave.date_applied }}</td>
-                    <td>{{ leave.status }}</td>
+                    <td>
+                        {% with leave.status|lower as status_lower %}
+                            {% if status_lower == "pending" %}
+                                <span class="pending">{{ leave.status }}</span>
+                            {% elif status_lower == "approved" %}
+                                <span class="approved">{{ leave.status }}</span>
+                            {% elif status_lower == "rejected" %}
+                                <span class="rejected">{{ leave.status }}</span>
+                            {% else %}
+                                {{ leave.status }}
+                            {% endif %}
+                        {% endwith %}
+                    </td>
                 </tr>
                 {% empty %}
                 <tr>
@@ -65,19 +93,20 @@
                 {% endfor %}
             </tbody>
         </table>
+        
+        
 
-        <br>
+        <hr>
 
         <!-- Leave Request Form -->
         <h3>Add Leave Request</h3>
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Submit Leave Request</button>
+            <div class="submit-btn">
+                <button type="submit">Submit Leave Request</button>
+            </div>
         </form>
 
 {% endblock content %}
-
-
-
 
