@@ -87,20 +87,13 @@
             <td>{{ leave.date_applied }}</td>
             <td>{{ leave.status }}</td>
             <td>
-                {% if leave.status == "Pending" %}
-                    <form method="post" style="display: flex; gap: 5px; align-items: center;">
-                        {% csrf_token %}
-                        <input type="hidden" name="leave_id" value="{{ leave.id }}">
-                        <button type="submit" name="action" value="approve" class="btn-approve">Approve</button>
-                        <button type="submit" name="action" value="reject" class="btn-reject">Reject</button>
-                    </form>
-                {% else %}
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <button type="submit" name="action" value="approve" class="btn-approve">Approve</button>
-                        <button type="submit" name="action" value="reject" class="btn-reject">Reject</button>
-                    </div>
-                {% endif %}
-            </td>                        
+                <form method="post" style="display: flex; gap: 5px; align-items: center;">
+                    {% csrf_token %}
+                    <input type="hidden" name="leave_id" value="{{ leave.id }}">
+                    <button name="action" name="action" value="approve" class="btn-approve">Approve</button>
+                    <button name="action" name="action" value="reject" class="btn-reject">Reject</button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
